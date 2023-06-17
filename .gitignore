@@ -56,3 +56,6 @@
 ###< lexik/jwt-authentication-bundle ###
 
 .idea
+
+#twig template
+/templates/*.twig
