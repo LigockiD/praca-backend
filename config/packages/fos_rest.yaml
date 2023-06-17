@@ -1,0 +1,28 @@
+fos_rest:
+  param_fetcher_listener: true
+  body_converter:
+    enabled: true
+    validate: true
+    validation_errors_argument: validationErrors
+  body_listener:
+    enabled: true
+    array_normalizer: fos_rest.normalizer.camel_keys_with_leading_underscore
+  format_listener:
+    enabled: true
+    rules:
+      - { path: ^/api, prefer_extension: true, fallback_format: json, priorities: [ json ] }
+      #      - { path: '^/api', priorities: json, fallback_format: json, attributes: { _controller: FOS\RestBundle\Controller\ExceptionController }, prefer_extension: true }
+      - { path: '^/', stop: true }
+  versioning:
+    enabled: true
+    resolvers:
+      query: true # Query parameter: /users?version=v1
+      custom_header: true # X-Accept-Version header
+      media_type: # Accept header
+        enabled: false
+        regex: '/(v|version)=(?P<version>[0-9\.]+)/'
+    guessing_order:
+      - query
+      - custom_header
+  view:
+    view_response_listener: 'force'
